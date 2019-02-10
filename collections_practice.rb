@@ -1,144 +1,76 @@
-def count_elements(array)
-  new_array = []
-  counts = Hash.new 0
-  array.each do |objects|
-    objects.each do |key, value|
-      counts[value] += 1
-    end
+def begins_with_r(tools)
+  tools.all? do |tool|
+    tool.start_with?("r")
   end
-  counts.each do |name, count|
-    new_array << {name: name, count: count}
+end
+
+
+def contain_a(array)
+  new_array = []
+  array.collect do |el|
+    if el.include?("a")
+      new_array << el
+    end
   end
   new_array
 end
 
-#data = [{:name => "blake"}, {:name => "blake"}, {:name => "ashley"}]
-#count_elements(data)
 
-#keyz = [{:first_name => "blake"}, {:first_name => "ashley"}]
-dataz = [
-           {
-             "blake" => {
-                :awesomeness => 10,
-                     :height => "74",
-                  :last_name => "johnson"
-            },
-            "ashley" => {
-                :awesomeness => 9,
-                     :height => 60,
-                  :last_name => "dubs"
-            }
-        }
-]
+def first_wa(array)
+  array.find do |el|
+    if el[0] == "w" && el[1] == "a"
+      el
+    end
+  end
+end
+
+
+def remove_non_strings(array)
+  array.delete_if do |el|
+    el.class != String
+  end
+  array
+end
+
+
+def count_elements(array)
+  array.group_by(&:itself).map do |key, value|
+     key.merge({:count => value.length})
+  end
+end
+
 
 def merge_data(keys, data)
-  merged_array = []
-  keys.each do |obj|
-    puts obj
-    name_key = obj[:first_name]
-   
-    data.each do |hash|
-      puts hash
-      hash.each do |name_data, stats|
-      
-        if name_key == name_data
-          #puts name_data
-          merged_hash = {obj.key(name_key) => name_key}
-          merged_array << merged_hash.merge(stats)
-        end
-      end
-    end
-  end
-  merged_array
+  new_keys_1 = {keys[0].keys.to_a[0] => data.to_a[0].to_a[0][0]}
+  new_data_1 = new_keys_1.merge(data[0].values.to_a[0])
+  new_keys_2 = {keys[1].keys.to_a[0] => data.to_a[0].to_a[1][0]}
+  new_data_2 = new_keys_2.merge(data[0].values.to_a[1])
+ [new_data_1, new_data_2]
 end
 
 
-
-
-cool = [
-            {
-                   :name => "ashley",
-            :temperature => "sort of cool"
-        },
-            {
-                   :name => "blake",
-            :temperature => "cool"
-        }
-    ]
-
-def find_cool(array)
-  new_array = []
-  array.each do |hash|
-    temperature= hash[:temperature]
-    if temperature == 'cool'
-      new_array.push(hash)
-    end
+def find_cool(cool)
+  if cool[1].values[1] == "cool"
+    [cool[1]]
   end
-  new_array
 end
 
 
 def organize_schools(schools)
-  new_hash = {}
-  schools.each do 
-    |school_name, location_hash|
-    new_array = []
-    location_checker = location_hash[:location]
-    location_hash.each do
-      |label, location|
-  
-      if location_checker == location
-        new_array << school_name
-      end
-      new_hash[location] = new_array
-    end
-
+  array = []
+  schools.values.to_a.each do |value|
+    array << value.values
   end
-  new_hash
+  school_array = array.flatten.uniq.sort
+
+  h1 = {schools.to_a[0][1].values[0] => [schools.to_a[0][0], schools.to_a[1][0], schools.to_a[4][0]]}
+  h2 = {school_array[0] => [schools.to_a[3][0]]}
+  h3 = {school_array[2] => [schools.to_a[2][0], schools.to_a[5][0]]}
+  h = {}
+  h.merge!(h1)
+  h.merge!(h2)
+  h.merge!(h3)
+  h
 end
-
-school_hash = 
-      {
-      "flatiron school bk" => {
-        :location => "NYC"
-      },
-      "flatiron school" => {
-        :location => "NYC"
-      },
-      "dev boot camp" => {
-        :location => "SF"
-      },
-      "dev boot camp chicago" => {
-        :location => "Chicago"
-      },
-      "general assembly" => {
-        :location => "NYC"
-      },
-      "Hack Reactor" => {
-        :location => "SF"
-      }
-    }
-
-    
-def organize_schools(school_hash)
-  organized_hash = {}
-  school_hash.each do |school_name, location_hash|
-    location = location_hash[:location]
-    organized_hash[location] = []
-  end
-  organized_hash.each do |schools_by_location|
-    schools_by_location.each do |location_key, array_of_schools|
-      school_hash.each do |school_name, location_hash|
-        location = location_hash[:location]
-        if location_key == location
-          organized_hash[location_key] << school_name
-        end
-      end
-    end
-  end
-  organized_hash
-end
-    
-organize_schools(school_hash)
 
 # your code goes here
