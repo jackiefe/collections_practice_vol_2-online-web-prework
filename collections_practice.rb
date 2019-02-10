@@ -36,7 +36,7 @@ def merge_data(keys, data)
   keys.each do |obj|
     puts obj
     name_key = obj[:first_name]
-    #puts name_key
+   
     data.each do |hash|
       puts hash
       hash.each do |name_data, stats|
